@@ -34,8 +34,8 @@ const SignupForm = props => {
     bio: '',
     age_min: 18,
     age_max: 21,
+    dist_max: 2,
     job: '',
-    education: '',
     interested_gender: 'Men',
     sexual_orientation_name: '',
     ytmusic_link: "",
@@ -94,6 +94,7 @@ const SignupForm = props => {
         sexual_orientation_id : orientation_id,
         passions : signupForm.user_passions,
       });
+      data['dist_max'] = parseInt(data['dist_max']);
       data['age_max'] = parseInt(data['age_max']);
       data['age_min'] = parseInt(data['age_min']);
       delete data['user_passions'];
@@ -137,6 +138,7 @@ const SignupForm = props => {
 
     setSignupForm({
       name : sessionStorage.getItem('name') ?? (inputData.name ?? ""),
+      dist_max : sessionStorage.getItem('dist_max') ? parseInt(sessionStorage.getItem('dist_max')) : (inputData.dist_max ?? 2 ),
       age_max : sessionStorage.getItem('age_max') ? parseInt(sessionStorage.getItem('age_max')) : (inputData.age_max ?? 21 ),
       age_min : sessionStorage.getItem('age_min') ? parseInt(sessionStorage.getItem('age_min')) : ( inputData.age_min ?? 18 ),
       gender : sessionStorage.getItem('gender') ?? (inputData.gender ?? "")  ,
@@ -146,7 +148,6 @@ const SignupForm = props => {
       spotify_link : sessionStorage.getItem('spotify_link') ?? (inputData.spotify_link ?? ""),
       ytmusic_link : sessionStorage.getItem('ytmusic_link') ?? ( inputData.ytmusic_link ?? ""),
       sexual_orientation_name : sessionStorage.getItem('sexual_orientation_name') ?? (inputData.sexual_orientation_name ?? inputData.sexual_orientation_list[0].name ),
-      education : sessionStorage.getItem('education') ?? ( inputData.education ?? ''),
       user_passions : sessionStorage.getItem('user_passions') ?  JSON.parse(sessionStorage.getItem('user_passions')) : inputData.user_passions.map( passions => passions.passion_id) ,
     });
 
@@ -245,9 +246,28 @@ const SignupForm = props => {
               />
             </InputGroup>
           </Form.Group>
-          <Form.Group as={Col} controlId="education">
-            <Form.Label>Education</Form.Label>
-            <InputGroup className="mb-2">
+          <Form.Group as={Col} controlId="dist_max">
+            <Form.Label>Maximum Distance</Form.Label>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}>
+              <Form.Text>In kms.</Form.Text>
+              <Form.Text>{signupForm.dist_max}</Form.Text>
+            </div>
+            <Form.Control
+              type="range"
+              min="2"
+              max="100"
+              step="1"
+              value={signupForm.dist_max}
+              name="dist_max"
+              onChange={handleChange}
+              custom
+            />
+            {/* <InputGroup className="mb-2">
               <InputGroup.Prepend>
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faGraduationCap} />
@@ -260,7 +280,7 @@ const SignupForm = props => {
                 value={signupForm.education}
                 onChange={handleChange}
               />
-            </InputGroup>
+            </InputGroup> */}
           </Form.Group>
         </Form.Row>
         <Form.Row>
