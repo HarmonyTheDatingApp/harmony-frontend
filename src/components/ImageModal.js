@@ -193,7 +193,7 @@ const ImageModal = (props) => {
       size = "lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Hot pics</Modal.Title>
+          <Modal.Title>Add some pics</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
